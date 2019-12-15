@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.4.3 (RELEASE-2.4.3-ad3323c; 2019-01-21T17:46:06+0000) JAXWS-RI/2.3.2 JAXWS-API/2.3.2 JAXB-RI/2.3.2 JAXB-API/2.3.2 git-revision#unknown. --><xs:schema xmlns:tns="http://serveri.ws.dkermek.nwtis.foi.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema" version="1.0" targetNamespace="http://serveri.ws.dkermek.nwtis.foi.org/">
+
+<xs:complexType name="aerodrom">
+<xs:sequence>
+<xs:element name="avioni" type="tns:avion" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+<xs:element name="drzava" type="xs:string" minOccurs="0"/>
+<xs:element name="icao" type="xs:string" minOccurs="0"/>
+<xs:element name="lokacija" type="tns:lokacija" minOccurs="0"/>
+<xs:element name="naziv" type="xs:string" minOccurs="0"/>
+<xs:element name="status" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="avion">
+<xs:sequence>
+<xs:element name="callsign" type="xs:string" minOccurs="0"/>
+<xs:element name="estarrivalairport" type="xs:string" minOccurs="0"/>
+<xs:element name="estdepartureairport" type="xs:string" minOccurs="0"/>
+<xs:element name="icao24" type="xs:string" minOccurs="0"/>
+<xs:element name="id" type="xs:int" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:complexType name="lokacija">
+<xs:sequence>
+<xs:element name="latitude" type="xs:string" minOccurs="0"/>
+<xs:element name="longitude" type="xs:string" minOccurs="0"/>
+</xs:sequence>
+</xs:complexType>
+
+<xs:simpleType name="aerodromStatus">
+<xs:restriction base="xs:string">
+<xs:enumeration value="PASIVAN"/>
+<xs:enumeration value="AKTIVAN"/>
+<xs:enumeration value="BLOKIRAN"/>
+<xs:enumeration value="NEPOSTOJI"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>

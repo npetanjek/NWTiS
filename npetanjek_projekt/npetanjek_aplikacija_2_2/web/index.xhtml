@@ -1,0 +1,100 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{prijavljenZrno.autentificiraj()}"/>
+    </f:metadata>
+    <h:head>
+        <title>Početna</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./predlozak.xhtml">
+
+            <ui:define name="naslov">
+                #{p['all.header.naslov']}
+            </ui:define>
+
+            <ui:define name="top">
+                #{p['all.header.naslov']}
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form>
+                    <h:commandLink value="#{p['all.link.odjava']}" action="#{prijavljenZrno.odjava()}"/><br/><br/>
+                    <h:link outcome="pregledAerodroma.xhtml">#{p['index.link.pregledAerodroma']}</h:link><br/>
+                    <h:link outcome="pregledLetova.xhtml">#{p['index.link.pregledLetova']}</h:link><br/>
+                    <h:link outcome="pregledLetovaNapredno.xhtml">#{p['index.link.pregledLetovaNapredno']}</h:link><br/>
+                    <h:link outcome="pregledMqttPoruka.xhtml">#{p['index.link.pregledMqttPoruka']}</h:link><br/>
+                    <h:link outcome="pregledDnevnikaRada.xhtml">#{p['index.link.pregledDnevnikaRada']}</h:link>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="content">
+
+                #{p['odabraniJezik.jezik']}: #{lokalizacija.jezik}<br/><br/>
+                <h:form>
+                    <h:selectOneRadio id="odaberiJezik" value="#{lokalizacija.jezik}">
+                        <f:selectItem itemValue="hr" itemLabel="#{p['index.jezik.hr']}"/>
+                        <f:selectItem itemValue="en" itemLabel="#{p['index.jezik.en']}"/>
+                    </h:selectOneRadio>
+                    <h:commandButton value="#{p['index.gumb.odabirJezika']}" action="#{lokalizacija.odaberiJezik}">
+                        <f:ajax execute="@form" render="@all"/>
+                    </h:commandButton>
+                    <br/><br/>
+                </h:form>
+
+                <h:form>
+                    <h:outputLabel value="#{p['all.label.dobrodosli']}, #{prijavljenZrno.korisnik}"/><br/><br/>
+
+                    <h:commandButton rendered="#{azurirnjeKorisnika.renderButton}" value="#{p['index.button.azurirajPodatke']}" action="#{azurirnjeKorisnika.setRenderAzuriranjeKorisnika(true)}">
+                        <f:ajax render="@form"/>
+                    </h:commandButton><br/><br/>
+                    <h:form rendered="#{azurirnjeKorisnika.renderAzuriranjeKorisnika}">
+                        <h3>#{p['index.header.azuriranjeKorisnika']}</h3>
+                        <h:outputLabel value="#{p['index.label.novaLozinka']}: "/>
+                        <h:inputText value="#{azurirnjeKorisnika.lozinka}"/><br/>
+                        <h:outputLabel value="#{p['all.label.ponovljenaLozinka']}: "/>
+                        <h:inputText value="#{azurirnjeKorisnika.ponovljenaLozinka}"/><br/>
+                        <h:outputLabel value="#{p['all.prezime']}: "/>
+                        <h:inputText value="#{azurirnjeKorisnika.prezime}"/><br/>
+                        <h:outputLabel value="#{p['all.ime']}: "/>
+                        <h:inputText value="#{azurirnjeKorisnika.ime}"/><br/>
+                        <h:outputLabel value="e-mail: "/>
+                        <h:inputText value="#{azurirnjeKorisnika.email}"/><br/><br/>
+                        <h:commandButton value="#{p['index.button.azurirajPodatke']}" action="#{azurirnjeKorisnika.azurirajPodatke()}">
+                            <f:ajax execute="@form" render="@form"/>
+                        </h:commandButton><br/>
+                    </h:form>
+                    <h:outputLabel value="#{p['all.label.poruka']}: #{azurirnjeKorisnika.poruka}"/><br/>
+                    <br/>
+                    <h:form>
+                        <h:dataTable value="#{pregledKorisnika.korisnici}" var="k" rows="#{pregledKorisnika.brojLinija}">
+                            <h:column>
+                                <f:facet name="header">#{p['all.column.korisnik']}</f:facet>
+                                    #{k.korIme}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{p['all.prezime']}</f:facet>
+                                    #{k.prezime}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">#{p['all.ime']}</f:facet>
+                                    #{k.ime}
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">e-mail</f:facet>
+                                    #{k.email}
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
+                    <br/>
+
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,0 +1,46 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{pregledKorisnika.preuzmiKorisnike()}"/>
+    </f:metadata>
+    <h:head>
+        <title>Pregled korisnika</title>
+    </h:head>
+    <h:body>
+        <h:link outcome="index.xhtml">Početna</h:link>
+        <h3>Pregled korisnika</h3>
+        <h:form>
+            <h:dataTable id="korisnici" value="#{pregledKorisnika.korisnici}" var="k" rows="#{pregledKorisnika.brojLinija}">
+                <h:column>
+                    <f:facet name="header">Korisničko ime</f:facet>
+                    #{k.korIme}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Ime</f:facet>
+                    #{k.ime}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Prezime</f:facet>
+                    #{k.prezime}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">e-mail</f:facet>
+                    #{k.email}
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="Prethodna" action="#{pregledKorisnika.prethodnaStranica()}">
+                <f:ajax render="sljedeca stranica korisnici"/>
+            </h:commandButton>
+            <h:commandButton id="sljedeca" disabled="#{pregledKorisnika.disabled}" value="Sljedeća" action="#{pregledKorisnika.sljedecaStranica()}">
+                <f:ajax render="sljedeca stranica korisnici"/>
+            </h:commandButton>
+            <h:outputLabel id="stranica" value="Stranica: #{pregledKorisnika.trenutnaStranica}"/>
+            <h:outputLabel value="/#{pregledKorisnika.brojStranica}"/>
+            <h:outputLabel value=" | Uk. broj korisnika: #{pregledKorisnika.ukBrojKorisnika}"/>
+        </h:form>
+    </h:body>
+</html>
+

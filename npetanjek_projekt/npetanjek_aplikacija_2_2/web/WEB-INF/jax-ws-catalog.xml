@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://localhost:8084/npetanjek_aplikacija_1/AvioniWS?wsdl" uri="wsdl/localhost_8084/npetanjek_aplikacija_1/AvioniWS.wsdl"/>
+    <system systemId="http://localhost:8084/npetanjek_aplikacija_1/AvioniWS?xsd=1" uri="wsdl/localhost_8084/npetanjek_aplikacija_1/AvioniWS.xsd_1.xsd"/>
+    <system systemId="http://localhost:8084/npetanjek_aplikacija_1/AvioniWS?xsd=2" uri="wsdl/localhost_8084/npetanjek_aplikacija_1/AvioniWS.xsd_2.xsd"/>
+</catalog>

@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <f:metadata>
+        <f:event type="preRenderView" listener="#{pregledDnevnikaRada.preuzmiDnevnikRada()}"/>
+    </f:metadata>
+    <h:head>
+        <title>Pregled dnevnika rada</title>
+    </h:head>
+    <h:body>
+        <h:link outcome="index.xhtml">Početna</h:link>
+        <h3>Pregled korisnika</h3>
+        <h:form>
+            <h:outputLabel value="Filter: "/>
+            <h:inputText value="#{pregledDnevnikaRada.filter}"/>
+            <h:outputLabel value=" Od vremena: "/>
+            <h:inputText value="#{pregledDnevnikaRada.odVremena}"/>
+            <h:outputLabel value=" Do vremena: "/>
+            <h:inputText value="#{pregledDnevnikaRada.doVremena}"/>
+            <h:commandButton value="Filtriraj" action="#{pregledDnevnikaRada.filtriraj()}"/>
+            <br/>
+            <h:dataTable id="dnevnik" value="#{pregledDnevnikaRada.dnevnik}" var="d" rows="#{pregledDnevnikaRada.brojLinija}">
+                <h:column>
+                    <f:facet name="header">ID</f:facet>
+                    #{d.id}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Vrijeme zapisa</f:facet>
+                    #{d.vrijeme}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Zahtjev</f:facet>
+                    #{d.zahtjev}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Vrsta zahtjeva</f:facet>
+                    #{d.vrstaZahtjeva}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Dio aplikacije</f:facet>
+                    #{d.dioAplikacije}
+                </h:column>
+                <h:column>
+                    <f:facet name="header">Korisnik</f:facet>
+                    #{d.korisnik}
+                </h:column>
+            </h:dataTable>
+            <h:commandButton value="Prethodna" action="#{pregledDnevnikaRada.prethodnaStranica()}">
+                <f:ajax render="sljedeca stranica dnevnik"/>
+            </h:commandButton>
+            <h:commandButton id="sljedeca" disabled="#{pregledDnevnikaRada.disabled}" value="Sljedeća" action="#{pregledDnevnikaRada.sljedecaStranica()}">
+                <f:ajax render="sljedeca stranica dnevnik"/>
+            </h:commandButton>
+            <h:outputLabel id="stranica" value="Stranica: #{pregledDnevnikaRada.trenutnaStranica}"/>
+            <h:outputLabel value="/#{pregledDnevnikaRada.brojStranica}"/>
+            <h:outputLabel value=" | Uk. broj zapisa #{pregledDnevnikaRada.ukBrojZapisa}"/>
+        </h:form>
+    </h:body>
+</html>
+

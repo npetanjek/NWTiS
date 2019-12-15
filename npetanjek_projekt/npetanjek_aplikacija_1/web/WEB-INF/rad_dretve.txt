@@ -1,0 +1,1 @@
+{"pocetakIntervala":1561160899,"redniBrojCiklusa":214}

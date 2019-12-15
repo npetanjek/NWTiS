@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:a="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pregled letova</title>
+    </h:head>
+
+    <h:body>
+        <ui:composition template="./predlozak.xhtml">
+
+            <ui:define name="naslov">
+                #{p['pregledLetova.header.pregledLetova']}
+            </ui:define>
+
+            <ui:define name="top">
+                #{p['all.header.naslov']} - #{p['pregledLetova.header.pregledLetova']}
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form>
+                    <h:commandLink value="#{p['all.link.odjava']}" action="#{prijavljenZrno.odjava()}"/><br/>
+                    <h:link outcome="index.xhtml">#{p['all.link.pocetna']}</h:link><br/><br/>
+                    <h:link outcome="pregledAerodroma.xhtml">#{p['index.link.pregledAerodroma']}</h:link><br/>
+                    <h:link outcome="pregledLetova.xhtml">#{p['index.link.pregledLetova']}</h:link><br/>
+                    <h:link outcome="pregledLetovaNapredno.xhtml">#{p['index.link.pregledLetovaNapredno']}</h:link><br/>
+                    <h:link outcome="pregledMqttPoruka.xhtml">#{p['index.link.pregledMqttPoruka']}</h:link><br/>
+                    <h:link outcome="pregledDnevnikaRada.xhtml">#{p['index.link.pregledDnevnikaRada']}</h:link>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p>#{p['all.korisnik']}: #{pregledLetova.korisnik}</p><br/>
+                    <h:panelGrid columns="2">
+                        <h:selectOneListbox id="odabraniAerodrom" value="#{pregledLetova.odabraniAerodrom}" size="#{pregledLetova.brojAerodromaMeni}">
+                            <f:selectItems value="#{pregledLetova.aerodromi}" var="a"
+                                           itemLabel="#{a.icao} #{a.naziv}" itemValue="#{a.icao}"/>
+                        </h:selectOneListbox>
+                        <h:outputLabel value=""/>
+                        <h:panelGroup>
+                            <h:outputLabel value="#{p['all.label.odVremena']}: "/>
+                            <h:inputText id="odVremena" a:placeholder="dd-MM-yyyy HH:mm:ss" value="#{pregledLetova.odVremena}"/><br/>
+                            <h:outputLabel value="#{p['all.label.doVremena']}: "/>
+                            <h:inputText id="doVremena" a:placeholder="dd-MM-yyyy HH:mm:ss" value="#{pregledLetova.doVremena}"/><br/><br/>
+                            <h:commandButton value="#{p['pregledLetova.button.preuzmiAvione']}" action="#{pregledLetova.preuzmiAvione()}">
+                                <f:ajax execute="odabraniAerodrom odVremena doVremena" render="@form"/>
+                            </h:commandButton>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <p:dataTable rendered="#{pregledLetova.renderAvioni}" value="#{pregledLetova.avioni}" var="av" 
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  "
+                                 rowsPerPageTemplate="5, 10, 15"
+                                 rows="#{pregledLetova.brojLinija}">
+                        <p:column>
+                            <f:facet name="header">Icao24</f:facet>
+                                #{av.icao24}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{p['all.column.oznaka']}</f:facet>
+                                #{av.callsign}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{p['all.column.slijeceNa']}</f:facet>
+                                #{av.estArrivalAirport}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{p['all.column.vrijemePolijetanja']}</f:facet>
+                                #{av.firstSeen}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{p['all.column.vrijemeSlijetanja']}</f:facet>
+                                #{av.icao24}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{p['all.column.akcija']}</f:facet>
+                            <h:commandButton value="#{p['pregledLetova.button.preuzmiLetove']}" action="#{pregledLetova.preuzmiLetoveAviona(av.icao24)}">
+                                <f:ajax render="@form"/>
+                            </h:commandButton>
+                        </p:column>
+                    </p:dataTable>
+                    <p:dataTable rendered="#{pregledLetova.renderLetovi}" value="#{pregledLetova.avionKrozAerodrome}" var="aka" 
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  "
+                                 rowsPerPageTemplate="5, 10, 15"
+                                 rows="#{pregledLetova.brojLinija}">
+                        <p:column>
+                            <f:facet name="header">#{p['all.column.vrijemePolijetanja']}</f:facet>
+                                #{aka.firstSeen}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{p['all.column.vrijemeSlijetanja']}</f:facet>
+                                #{aka.lastSeen}
+                        </p:column>
+                        <p:column>
+                            <f:facet name="header">#{p['all.column.slijeceNa']}</f:facet>
+                                #{aka.estArrivalAirport}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

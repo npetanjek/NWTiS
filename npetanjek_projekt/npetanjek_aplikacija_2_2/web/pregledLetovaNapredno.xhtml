@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pregled letova napredno</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./predlozak.xhtml">
+
+            <ui:define name="naslov">
+                #{p['pregledLetova.header.pregledLetova']}
+            </ui:define>
+
+            <ui:define name="top">
+                #{p['all.header.naslov']} - #{p['pregledLetova.header.pregledLetova']}
+            </ui:define>
+
+            <ui:define name="left">
+                <h:form>
+                    <h:commandLink value="#{p['all.link.odjava']}" action="#{prijavljenZrno.odjava()}"/><br/>
+                    <h:link outcome="index.xhtml">#{p['all.link.pocetna']}</h:link><br/><br/>
+                    <h:link outcome="pregledAerodroma.xhtml">#{p['index.link.pregledAerodroma']}</h:link><br/>
+                    <h:link outcome="pregledLetova.xhtml">#{p['index.link.pregledLetova']}</h:link><br/>
+                    <h:link outcome="pregledLetovaNapredno.xhtml">#{p['index.link.pregledLetovaNapredno']}</h:link><br/>
+                    <h:link outcome="pregledMqttPoruka.xhtml">#{p['index.link.pregledMqttPoruka']}</h:link><br/>
+                    <h:link outcome="pregledDnevnikaRada.xhtml">#{p['index.link.pregledDnevnikaRada']}</h:link>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form>
+                    <p>#{p['all.korisnik']}: #{pregledLetovaNapredno.korisnik}</p><br/>
+                    <h:panelGrid columns="2">
+                        <h:selectManyListbox id="odabraniAerodromi" value="#{pregledLetovaNapredno.odabraniAerodromi}" size="#{pregledLetovaNapredno.brojAerodromaMeni}">
+                            <f:selectItems value="#{pregledLetovaNapredno.aerodromi}" var="a"
+                                           itemLabel="#{a.icao} #{a.naziv}" itemValue="#{a.icao}"/>
+                        </h:selectManyListbox>
+                        <h:commandButton value="#{p['pregledLetovaNapredno.label.izracunajUdaljenost']}" action="#{pregledLetovaNapredno.izracunajUdaljenostIzmeduAerodroma()}">
+                            <f:ajax execute="odabraniAerodromi" render="@form"/>
+                        </h:commandButton>
+                        <h:panelGroup>
+                            <h:outputLabel value="Lat1: #{pregledLetovaNapredno.prviAerodromLat}"/><br/>
+                            <h:outputLabel value="Lon1: #{pregledLetovaNapredno.prviAerodronLon}"/><br/>
+                            <h:outputLabel value="Lat2: #{pregledLetovaNapredno.drugiAerodromLat}"/><br/>
+                            <h:outputLabel value="Lon2: #{pregledLetovaNapredno.drugiAerodromLon}"/><br/>
+                            <h:outputLabel value="#{p['pregledLetovaNapredno.label.udaljenost']}: #{pregledLetovaNapredno.udaljenost}"/><br/>
+                        </h:panelGroup>
+                    </h:panelGrid>
+                    <h:outputLabel value="Min: "/>
+                    <h:inputText value="#{pregledLetovaNapredno.minUdaljenost}"/>
+                    <h:outputLabel value="Max: "/>
+                    <h:inputText value="#{pregledLetovaNapredno.maxUdaljenost}"/>
+                    <h:commandButton value="Daj aerodrome unutar granica" action="#{pregledLetovaNapredno.dohvatiAerodromeUnutarGranica()}"/><br/>
+                    <p:dataTable value="#{pregledLetovaNapredno.aerodromiUnutarGranica}" var="aug" 
+                                 paginator="true"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  "
+                                 rowsPerPageTemplate="5, 10, 15"
+                                 rows="#{pregledLetovaNapredno.brojLinija}">
+                        <p:column>
+                            <f:facet name="header">#{p['all.column.aerodrom']}</f:facet>
+                            #{aug}
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

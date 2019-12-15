@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:outputScript library="js" name="pregledPoruka.js"/>
+    <h:head>
+        <title>Pregled JMS poruka</title>
+    </h:head>
+    <h:body>
+        <h:form id="formPregledJmsPoruka">
+            <h:link outcome="index.xhtml">Početna</h:link><br/>
+            <h:commandLink value="Odjava" action="#{prijavljenZrno.odjava()}"/><br/><br/>
+            <h:commandButton style="visibility: hidden" id="preuzmiJmsPoruke" action="#{pregledJMSPoruka.preuzmiJmsPoruke()}">
+                <f:ajax render="@form"/>
+            </h:commandButton><br/>
+            <h:commandButton value="Briši sve JMS poruke" action="#{pregledJMSPoruka.brisiJmsPoruke()}">
+                <f:ajax render="@form"/>
+            </h:commandButton><br/>
+            <p:dataTable value="#{pregledJMSPoruka.jmsPoruke}" var="por" 
+                         paginator="true"
+                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}  "
+                         rowsPerPageTemplate="5, 10, 15"
+                         rows="#{pregledJMSPoruka.brojLinija}">
+                <p:column>
+                    <f:facet name="header">ID</f:facet>
+                        #{por.id}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Komanda</f:facet>
+                        #{por.komanda}
+                </p:column>
+                <p:column>
+                    <f:facet name="header">Vrijeme</f:facet>
+                        #{por.vrijeme}
+                </p:column>
+            </p:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

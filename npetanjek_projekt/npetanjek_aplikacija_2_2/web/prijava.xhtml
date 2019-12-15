@@ -1,0 +1,52 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Prijava</title>
+    </h:head>
+    <h:body id="prijava">
+        <ui:composition template="./predlozak.xhtml">
+
+            <ui:define name="naslov">
+                #{p['prijava.header.prijava']}
+            </ui:define>
+
+            <ui:define name="top">
+                #{p['all.header.naslov']} -  #{p['prijava.header.prijava']}
+            </ui:define>
+
+            <ui:define name="content">
+                <h:form rendered="#{prijavaZrno.renderPrijava}">
+                    <h:outputLabel value="#{p['prijava.label.korime']}:"/><br/>
+                    <h:inputText id="korisnik" value="#{prijavaZrno.korisnik}"/><br/>
+                    <h:outputLabel value="#{p['prijava.label.lozinka']}:"/><br/>
+                    <h:inputText id="lozinka" value="#{prijavaZrno.lozinka}"/><br/><br/>
+                    <h:commandButton value="#{p['prijava.button.prijaviSe']}" action="#{prijavaZrno.autenticiraj()}"/>
+                    <h:commandButton value="#{p['prijava.button.registracija']}" action="#{prijavaZrno.registriraj()}"/>
+                    <br/>
+                    <h:outputLabel value="Poruka: #{prijavaZrno.poruka}"/>
+                </h:form>
+                <h:form rendered="#{prijavaZrno.renderRegistracija}">
+                    <h:outputLabel value="Korisničko ime:"/><br/>
+                    <h:inputText value="#{registracijaZrno.korisnik}"/><br/>
+                    <h:outputLabel value="Lozinka:"/><br/>
+                    <h:inputText value="#{registracijaZrno.lozinka}"/><br/>
+                    <h:outputLabel value="Ponovite lozinku:"/><br/>
+                    <h:inputText value="#{registracijaZrno.ponovljenaLozinka}"/><br/>
+                    <h:outputLabel value="Prezime:"/><br/>
+                    <h:inputText value="#{registracijaZrno.prezime}"/><br/>
+                    <h:outputLabel value="Ime:"/><br/>
+                    <h:inputText value="#{registracijaZrno.ime}"/><br/>
+                    <h:outputLabel value="e-mail:"/><br/>
+                    <h:inputText value="#{registracijaZrno.email}"/><br/><br/>
+                    <h:commandButton value="Registracija" action="#{registracijaZrno.registriraj()}"/>
+                    <h:commandButton value="Natrag" action="#{prijavaZrno.natrag()}"/><br/>
+                    <h:outputLabel value="Poruka: #{registracijaZrno.poruka}"/>
+                </h:form>   
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

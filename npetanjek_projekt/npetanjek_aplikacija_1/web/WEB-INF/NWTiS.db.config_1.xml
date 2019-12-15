@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+<comment>NWTIS konfiguracija</comment>
+<entry key="server.database">jdbc:mysql://localhost/</entry>
+<entry key="admin.username">nwtis_admin</entry>
+<entry key="admin.password">nwtis_foi</entry>
+<entry key="admin.database">mysql</entry>
+<entry key="user.username">nwtis_g1</entry>
+<entry key="user.password">g1_nwtis</entry>
+<entry key="user.database">nwtis_npetanjek_bp_1</entry>
+<entry key="jdbc.odbc">sun.jdbc.odbc.JdbcOdbcDriver</entry>
+<entry key="jdbc.mysql">com.mysql.jdbc.Driver</entry>
+<entry key="jdbc.derby">org.apache.derby.jdbc.ClientDriver</entry>
+
+<entry key="korisnik">npetanjek</entry>
+<entry key="lozinka">SrgtFgt1996</entry>
+<entry key="preuzimanje.ciklus">1</entry>
+<entry key="preuzimanje.pocetak">120</entry>
+<entry key="preuzimanje.trajanje">5</entry>
+<entry key="OpenWeatherMap.apikey">e84aad22487d7bdce67d7a6db99c7427</entry>
+<entry key="pregledKorisnika.brojLinija">5</entry>
+<entry key="pregledDnevnika.brojLinija">5</entry>
+<entry key="server.host">localhost</entry>
+<entry key="server.port">8000</entry>
+</properties>
